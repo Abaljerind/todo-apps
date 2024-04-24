@@ -51,7 +51,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     for (const todoItem of todos) {
       const todoElement = makeTodo(todoItem);
-      uncompletedTODOList.append(todoElement);
+      //   menambahkan filter dengan conditions agar yang ditampilkan hanya todo "yang harus dibaca" saja, dimana status isCompleted nya false dan ketika buttonCheck di klik maka isCompleted nya akan berubah menjadi true dan todoElement akan dipindahkan ke div "yang sudah selesai dikerjakan"
+      if (!todoItem.isCompleted) {
+        uncompletedTODOList.append(todoElement);
+      }
     }
   });
 
