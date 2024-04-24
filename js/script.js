@@ -45,7 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //   membuat listener dari RENDER_EVENT dengan menampilkan array todos menggunakan console.log();
   document.addEventListener(RENDER_EVENT, function () {
-    console.log(todos);
+    // console.log(todos);
+    const uncompletedTODOList = document.getElementById("todos");
+    uncompletedTODOList.innerHTML = "";
+
+    for (const todoItem of todos) {
+      const todoElement = makeTodo(todoItem);
+      uncompletedTODOList.append(todoElement);
+    }
   });
 
   //   function makeTodo untuk menghasilkan sebuah item untuk mengisi container todos
