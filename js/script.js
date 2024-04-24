@@ -49,11 +49,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const uncompletedTODOList = document.getElementById("todos");
     uncompletedTODOList.innerHTML = "";
 
+    const completedTODOList = document.getElementById("completed-todos");
+    // Agar tidak terjadi duplikasi oleh item yang ada di tampilan ketika memperbarui data todo yang ditampilkan, maka hapus terlebih dahulu elemen sebelumnya (yang sudah ditampilkan) dengan perintah innerHTML = “”.
+    completedTODOList.innerHTML = "";
+
     for (const todoItem of todos) {
       const todoElement = makeTodo(todoItem);
-      //   menambahkan filter dengan conditions agar yang ditampilkan hanya todo "yang harus dibaca" saja, dimana status isCompleted nya false dan ketika buttonCheck di klik maka isCompleted nya akan berubah menjadi true dan todoElement akan dipindahkan ke div "yang sudah selesai dikerjakan"
+      //   menambahkan filter dengan conditions agar yang ditampilkan hanya todo "yang harus dibaca" saja, dimana status isCompleted nya false dan ketika buttonCheck di klik maka isCompleted nya akan berubah menjadi true dan todoElement akan dipindahkan ke div "yang sudah dilakukan"
       if (!todoItem.isCompleted) {
         uncompletedTODOList.append(todoElement);
+      } else {
+        // ketika checkButton diklik maka status isCompleted berubah menjadi true dan merender ulang elemen html dengan memindahkan todo ke bagian / rak / div "yang sudah dilakukan"
+        completedTODOList.append(todoElement);
       }
     }
   });
