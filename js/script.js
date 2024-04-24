@@ -100,6 +100,26 @@ document.addEventListener("DOMContentLoaded", function () {
       container.append(checkButton);
     }
 
+    // menambahkan function addTaskToCompleted() agar bisa memindahkan task todo yang sudah selesai
+    function addTaskToCompleted(todoId) {
+      const todoTarget = findTodo(todoId);
+
+      if (todoTarget == null) return;
+
+      todoTarget.isCompleted = true;
+      document.dispatchEvent(new Event(RENDER_EVENT)); // panggil event RENDER_EVENT untuk memperbarui data yang ditampilkan.
+    }
+
+    // menambahkan function findTodo() untuk mencari todo dengan ID yang sesuai pada array "todos".
+    function findTodo(todoId) {
+      for (const todoItem of todos) {
+        if (todoItem.id === todoId) {
+          return todoItem;
+        }
+      }
+      return null;
+    }
+
     return container;
   }
 });
