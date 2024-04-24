@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const textTodo = document.getElementById("title").value;
     const timestamp = document.getElementById("date").value;
 
-    const generateID = generateId();
+    const generatedID = generateId();
     const todoObject = generateTodoObject(
-      generateID,
+      generatedID,
       textTodo,
       timestamp,
       false
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   function generateId()
   function generateId() {
     return +new Date();
+    // return Number(new Date); // yang dibaris ini sama artinya dengan yg diatas
   }
 
   // function generateTodoObject()
