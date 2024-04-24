@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  //   membuat listener dari RENDER_EVENT dengan menampilkan array todos menggunakan console.log();
+  //   membuat listener dari RENDER_EVENT dengan menampilkan array todos yang dibuat dari function makeTodo()
   document.addEventListener(RENDER_EVENT, function () {
     // console.log(todos);
     const uncompletedTODOList = document.getElementById("todos");
@@ -71,6 +71,34 @@ document.addEventListener("DOMContentLoaded", function () {
     container.classList.add("item", "shadow");
     container.append(textContainer);
     container.setAttribute("id", `todo-${todoObject.id}`);
+
+    // menambahkan fungsi check, uncheck / undo dan menghapus todo.
+    if (todoObject.isCompleted) {
+      const undoButton = document.createElement("button");
+      undoButton.classList.add("undo-button");
+
+      undoButton.addEventListener("click", function () {
+        undoTaskFromCompleted(todoObject.id);
+      });
+
+      const trashButton = document.createElement("button");
+      trashButton.classList.add("trash-button");
+
+      trashButton.addEventListener("click", function () {
+        removeTaskFromCompleted(todoObject.id);
+      });
+
+      container.append(undoButton, trashButton);
+    } else {
+      const checkButton = document.createElement("button");
+      checkButton.classList.add("check-button");
+
+      checkButton.addEventListener("click", function () {
+        addTaskToCompleted(todoObject.id);
+      });
+
+      container.append(checkButton);
+    }
 
     return container;
   }
