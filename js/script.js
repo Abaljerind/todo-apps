@@ -1,3 +1,14 @@
+/**
+ * [
+ *    {
+ *      id: <int>
+ *      task: <string>
+ *      timestamp: <string>
+ *      isCompleted: <boolean>
+ *    }
+ * ]
+ */
+
 // menambahkan event pada halaman document ketika halaman web selesai dimuat / ditampilkan oleh browser.
 document.addEventListener("DOMContentLoaded", function () {
   const todos = [];
@@ -108,6 +119,36 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       container.append(checkButton);
+    }
+
+    // menambahkan function removeTaskFromCompleted() agar bisa menghapus todo yang sudah selesai dilakukan
+    function removeTaskFromCompleted(todoId) {
+      const todoTarget = findTodoIndex(todoId);
+
+      if (todoTarget === -1) return;
+
+      todos.splice(todoTarget, 1);
+      document.dispatchEvent(new Event(RENDER_EVENT));
+    }
+
+    // menambahkan function findTodoIndex() untuk mendapatkan nilai index dari elemen id pada array todos
+    function findTodoIndex(todoId) {
+      for (const index in todos) {
+        if (todos[index].id === todoId) {
+          return index;
+        }
+      }
+
+      return -1;
+    }
+
+    // menambahkan function undoTaskFromCompleted() agar bisa mengembalikan todo ke kondisi "yang harus dilakukan" dari kondisi "yang sudah dilakukan"
+    function undoTaskFromCompleted(todoId) {
+      const todoTarget = findTodo(todoId);
+
+      if (todoTarget == null) return;
+      todoTarget.isCompleted = false;
+      document.dispatchEvent(new Event(RENDER_EVENT));
     }
 
     // menambahkan function addTaskToCompleted() agar bisa memindahkan task todo yang sudah selesai
