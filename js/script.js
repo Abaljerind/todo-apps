@@ -12,6 +12,18 @@
 const todos = [];
 const RENDER_EVENT = "render-todo";
 
+const SAVED_EVENT = "saved-todo"; // event baru untuk menyimpan todo
+const STORAGE_KEY = "TODO_APPS"; // key untuk web storage
+
+// menambahkan function isStorageExist untuk mengecek apakah browser yang digunakan mendukung adanya web browser.
+function isStorageExist() /* Boolean */ {
+  if (typeof Storage === undefined) {
+    alert("Browser kamu tidak mendukung local storage");
+    return false;
+  }
+  return true;
+}
+
 // menambahkan event pada halaman document ketika halaman web selesai dimuat / ditampilkan oleh browser.
 document.addEventListener("DOMContentLoaded", function () {
   // menambahkan event pada #form berupa 'submit' agar mencegah di refresh halaman websitenya & memanggil function addTodo();
@@ -37,6 +49,7 @@ function addTodo() {
   todos.push(todoObject);
 
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 }
 
 //   function generateId()
@@ -133,6 +146,7 @@ function removeTaskFromCompleted(todoId) {
 
   todos.splice(todoTarget, 1);
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 }
 
 // menambahkan function findTodoIndex() untuk mendapatkan nilai index dari elemen id pada array todos
@@ -153,6 +167,7 @@ function undoTaskFromCompleted(todoId) {
   if (todoTarget == null) return;
   todoTarget.isCompleted = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 }
 
 // menambahkan function addTaskToCompleted() agar bisa memindahkan task todo yang sudah selesai
@@ -163,6 +178,7 @@ function addTaskToCompleted(todoId) {
 
   todoTarget.isCompleted = true;
   document.dispatchEvent(new Event(RENDER_EVENT)); // panggil event RENDER_EVENT untuk memperbarui data yang ditampilkan.
+  saveData();
 }
 
 // menambahkan function findTodo() untuk mencari todo dengan ID yang sesuai pada array "todos".
@@ -173,4 +189,13 @@ function findTodo(todoId) {
     }
   }
   return null;
+}
+
+// menambahkan function saveData() untuk menyimpan todos ke local storage browser.
+function saveData() {
+  if (isStorageExist()) {
+    const parsed = JSON.stringify(todos);
+    localStorage.setItem(STORAGE_KEY, parsed);
+    document.dispatchEvent(new Event(SAVED_EVENT));
+  }
 }
