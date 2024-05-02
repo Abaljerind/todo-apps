@@ -201,6 +201,6 @@ function saveData() {
 }
 
 // menambahkan event listener untuk mengetahui bahwa pada setiap perubahan data bisa secara sukses memperbaharui data pada storage.
-// document.addEventListener(SAVED_EVENT, function () {
-//   console.log(localStorage.getItem(STORAGE_KEY));
-// });
+document.addEventListener(SAVED_EVENT, function () {
+  console.log(localStorage.getItem(STORAGE_KEY));
+});
