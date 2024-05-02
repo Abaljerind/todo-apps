@@ -224,8 +224,8 @@ const btnSubmit = document.querySelector(".btn-submit");
 const toast = document.getElementById("toasted");
 btnSubmit.addEventListener("click", function () {
   toast.innerText = "Berhasil menambahkan tugas";
-  toast.className = "show";
+  toast.classList.add("show");
   setTimeout(() => {
-    toast = toast.className.replace("show", "");
+    toast.classList.remove("show");
   }, 1200);
 });
