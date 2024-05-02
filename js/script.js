@@ -219,7 +219,13 @@ function saveData() {
   }
 }
 
-// menambahkan event listener untuk menampilkan log console ketika terjadi perubahan data.
-document.addEventListener(SAVED_EVENT, function () {
-  console.log(localStorage.getItem(STORAGE_KEY));
+// menambahkan event listener untuk menampilkan toast ketika terjadi penambahan data todo.
+const btnSubmit = document.querySelector(".btn-submit");
+const toast = document.getElementById("toasted");
+btnSubmit.addEventListener("click", function () {
+  toast.innerText = "Berhasil menambahkan tugas";
+  toast.className = "show";
+  setTimeout(() => {
+    toast = toast.className.replace("show", "");
+  }, 1200);
 });
