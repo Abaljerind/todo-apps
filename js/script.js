@@ -24,6 +24,20 @@ function isStorageExist() /* Boolean */ {
   return true;
 }
 
+// menambahkan function loadDataFromStorage agar menampilkan data dari localStorage ketika halaman web pertama kali dimuat / load.
+function loadDataFromStorage() {
+  const serializedData = localStorage.getItem(STORAGE_KEY);
+  let data = JSON.parse(serializedData);
+
+  if (data !== null) {
+    for (const todo of data) {
+      todos.push(todo);
+    }
+  }
+
+  document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
 // menambahkan event pada halaman document ketika halaman web selesai dimuat / ditampilkan oleh browser.
 document.addEventListener("DOMContentLoaded", function () {
   // menambahkan event pada #form berupa 'submit' agar mencegah di refresh halaman websitenya & memanggil function addTodo();
@@ -32,6 +46,11 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     addTodo();
   });
+
+  // memanggil function loadDataFromStorage agar menampilkan data yang sudah ada pada localStorage saat semua elemen HTML sudah selesai dimuat / load.
+  if (isStorageExist()) {
+    loadDataFromStorage();
+  }
 });
 
 //   function addTodo()
@@ -200,7 +219,7 @@ function saveData() {
   }
 }
 
-// menambahkan event listener untuk mengetahui bahwa pada setiap perubahan data bisa secara sukses memperbaharui data pada storage.
+// menambahkan event listener untuk menampilkan log console ketika terjadi perubahan data.
 document.addEventListener(SAVED_EVENT, function () {
   console.log(localStorage.getItem(STORAGE_KEY));
 });
